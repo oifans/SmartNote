@@ -7,7 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import cn.bmob.v3.Bmob;
 
 /**
- * Created by smile on 2017/4/18.
+ * Created by LB on 2017/4/18.
+ * 基础Activity
  */
 
 public class BaseActivity extends AppCompatActivity {
@@ -17,5 +18,8 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //初始化Bmob
         Bmob.initialize(this,Constant.BmobAppId);
+        findViewById();
     }
+
+    public void findViewById(){};
 }
