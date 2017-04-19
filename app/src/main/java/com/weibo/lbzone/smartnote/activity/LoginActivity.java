@@ -5,15 +5,15 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.weibo.lbzone.smartnote.BaseActivity;
 import com.weibo.lbzone.smartnote.OpenActivity;
 import com.weibo.lbzone.smartnote.R;
 import com.weibo.lbzone.smartnote.bean.User;
 
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.LogInListener;
 
 /**
  * Created by LB on 2017/4/18.
@@ -23,10 +23,10 @@ import cn.bmob.v3.listener.SaveListener;
 public class LoginActivity extends BaseActivity {
 
     private Button mBtLogin;
-    private Button mBtRegister;
     private EditText mEtUserName;
     private EditText mEtPassWord;
-
+    private TextView mTvRegister;
+    private TextView mTvFindPassword;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,15 +38,13 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 User user = new User();
-                user.setUsername(mEtUserName.getText().toString());
-                user.setPassword(mEtPassWord.getText().toString());
-                user.login(new SaveListener<User>() {
+                String phoneNum = mEtUserName.getText().toString();
+                String password = mEtPassWord.getText().toString();
+                user.loginByAccount(phoneNum, password, new LogInListener<User>() {
                     @Override
                     public void done(User user, BmobException e) {
-                        if (e == null) {
-                            user = BmobUser.getCurrentUser(User.class);
-                        } else {
-
+                        if(user != null){
+                            OpenActivity.ToMainActivity(LoginActivity.this);
                         }
                     }
                 });
@@ -55,7 +53,7 @@ public class LoginActivity extends BaseActivity {
         });
 
         //进入注册界面
-        mBtRegister.setOnClickListener(new View.OnClickListener() {
+        mTvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OpenActivity.ToRegisterActivity(LoginActivity.this);
@@ -67,7 +65,8 @@ public class LoginActivity extends BaseActivity {
     public void findViewById() {
         mEtUserName = (EditText) findViewById(R.id.et_username);
         mEtPassWord = (EditText) findViewById(R.id.et_password);
-        mBtRegister = (Button) findViewById(R.id.bt_register);
+        mTvRegister = (TextView) findViewById(R.id.tv_register);
+        mTvFindPassword = (TextView) findViewById(R.id.tv_find);
         mBtLogin = (Button) findViewById(R.id.bt_login);
     }
 }

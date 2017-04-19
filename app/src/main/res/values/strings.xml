@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">SmartNote</string>
+
+    <!-- 注册登录 -->
+    <string name="phoneNumError">手机号格式错误</string>
+    <string name="registerError">注册失败</string>
+    <string name="registerSuccess">注册成功</string>
 </resources>
